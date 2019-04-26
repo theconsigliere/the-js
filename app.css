@@ -1,9 +1,14 @@
 @import url("https://fonts.googleapis.com/css?family=Karla");
 
+html {
+  background: black;
+}
+
 * {
   font-family: "Karla", sans-serif;
 }
 
 h1 {
-  font-size: 56px;
+  font-size: 86px;
+  color: white;
 }

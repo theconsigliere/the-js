@@ -14,10 +14,6 @@ var diff = age < _newage;
 //returns boolean, returns true
 console.log(diff);
 
-//typeof operator
-console.log(typeof diff);
-//returns the type of data ie boolean, string number or undefined
-
 //operator precedence
 
 var now = 2018;
