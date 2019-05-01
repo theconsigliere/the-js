@@ -49,47 +49,5 @@ if (height == "23") {
 //
 //
 //
-
-// code challenge
-
-var title = document.querySelector("h1");
-
-var johnScore = (89 + 120 + 103) / 3;
-var mikeScore = (116 + 94 + 123) / 3;
-
-johnScore > mikeScore
-  ? (title.innerHTML =
-      "John's team's average points per game " +
-      johnScore +
-      " is better than Mike's team " +
-      mikeScore)
-  : (title.innerHTML =
-      "Mike's team's average points per game " +
-      mikeScore +
-      " is better than John's team " +
-      johnScore);
-
-johnScore = (89 + 120 + 103) / 3;
-mikeScore = (89 + 120 + 103) / 3;
-
-var maryScore = (97 + 134 + 105) / 3;
-
-if (johnScore > mikeScore) {
-  title.innerHTML =
-    "John's team's average points per game " +
-    johnScore +
-    " is better than Mike's team " +
-    mikeScore;
-} else if (johnScore === mikeScore) {
-  title.innerHTML =
-    "John's team's average points per game " +
-    johnScore +
-    " is the same as Mike's team " +
-    mikeScore;
-} else {
-  title.innerHTML =
-    "Mike's team's average points per game " +
-    mikeScore +
-    " is better than John's team " +
-    johnScore;
-}
+// != performs type coercion
+// !== does not perform type coercion
