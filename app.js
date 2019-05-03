@@ -1,4 +1,4 @@
-var scores, roundScore, activePlayer, dice, lastDice;
+var scores, roundScore, activePlayer, dice, dice2, lastDice, lastDice2;
 
 //variables declared
 
@@ -15,7 +15,9 @@ var panelOne = document.querySelector(".player-1-panel");
 var buttonRoll = document.querySelector(".btn-roll");
 var buttonHold = document.querySelector(".btn-hold");
 var buttonNew = document.querySelector(".btn-new");
+
 var diceIcon = document.querySelector(".dice");
+var diceIcon2 = document.querySelector(".dice-2");
 
 const playerZeroTitle = document.querySelector(".player-0-panel");
 const playerOneTitle = document.querySelector(".player-1-panel");
@@ -25,6 +27,7 @@ const playerOneTitle = document.querySelector(".player-1-panel");
 init();
 
 diceIcon.style.display = "none";
+diceIcon2.style.display = "none";
 
 //----------------------------------------------------------------------------------------------------------------//
 // FUNCTION   button roll    --------------------------------------------------------------------------------------//
@@ -33,21 +36,19 @@ buttonRoll.addEventListener("click", function() {
     // 1. random number
     //always displays a number between 1 - 6
     dice = Math.floor(Math.random() * 6) + 1;
+    dice2 = Math.floor(Math.random() * 6) + 1;
 
     //2.display the result
     diceIcon.style.display = "block";
+    diceIcon2.style.display = "block";
     diceIcon.src = "../img/d-" + dice + ".svg";
+    diceIcon2.src = "../img/d-" + dice2 + ".svg";
 
-    if (dice === 6 && lastDice === 6) {
-      // player loses score
-      scores[activePlayer] = 0;
-      document.querySelector("#score-" + activePlayer).textContent = "0";
-      //nextplayer is called
-      nextPlayer();
-    } //3. update the round score if the rolled number is not a 1
-    else if (dice !== 1) {
+    // if either dice is not equal to 1 add score
+
+    if (dice !== 1 && dice2 !== 1) {
       //add score
-      roundScore += dice;
+      roundScore += dice + dice2;
       // same as roundScore = roundScore + dice;
       document.getElementById(
         "current-" + activePlayer
@@ -56,8 +57,10 @@ buttonRoll.addEventListener("click", function() {
       //from our nextplayer function
       nextPlayer();
     }
+
     // find variable after click
     lastDice = dice;
+    lastDice2 = dice2;
   }
 });
 //----------------------------------------------------------------------------------------------------------------//
@@ -65,20 +68,29 @@ buttonRoll.addEventListener("click", function() {
 buttonHold.addEventListener("click", function() {
   if (gamePlaying) {
     // add current score to global score
-    console.log(scores[activePlayer]);
+    //console.log(scores[activePlayer]);
 
     scores[activePlayer] += roundScore;
     //socres[activePlayer] = scores[activePlayer] + roundScore;
-    console.log(scores[activePlayer]);
+    //console.log(scores[activePlayer]);
 
     //update the UI
     document.querySelector("#score-" + activePlayer).textContent =
       scores[activePlayer];
 
+    // take value from input
+    var input = document.querySelector(".final-score").value;
+    // if input equals 0 the default is 100
+    if (input === "0") {
+      input = "100";
+    }
+    console.log(input);
+
     //check if player won the game
-    if (scores[activePlayer] >= 100) {
+    if (scores[activePlayer] >= input) {
       document.querySelector("#name-" + activePlayer).textContent = "winner!";
       diceIcon.style.display = "none";
+      diceIcon2.style.display = "none";
       //state variable
       document
         .querySelector(".player-" + activePlayer + "-panel")
@@ -108,6 +120,7 @@ function nextPlayer() {
   panelZero.classList.toggle("active");
   //remove dice when one has been rolled
   diceIcon.style.display = "none";
+  diceIcon2.style.display = "none";
 }
 //----------------------------------------------------------------------------------------------------------------//
 // FUNCTION   new game click  --------------------------------------------------------------------------------------//
