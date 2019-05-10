@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css?family=Roboto");
+
 /**********************************************
 *** GENERAL
 **********************************************/
@@ -17,97 +19,102 @@
 }
 
 body {
-  background: #000;
+  color: #000;
   font-size: 16px;
   position: relative;
   height: 100vh;
-  width: 100%;
   font-weight: 400;
 }
 
-/**********************************************/
-
-header {
-  width: 100vw;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 10vh;
+.right {
+  float: right;
+}
+.red {
+  color: #ff5049 !important;
+}
+.red-focus:focus {
+  border: 1px solid #ff5049 !important;
 }
 
-header h4 {
-  font-size: 2vw;
-}
+/**********************************************
+*** TOP PART
+**********************************************/
 
 .top {
-  display: flex;
-  align-items: center;
-  justify-content: center;
   height: 40vh;
+  background-image: linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)),
+    url(back.png);
+  background-size: cover;
+  background-position: center;
+  position: relative;
+}
+
+.budget {
+  position: absolute;
+  width: 350px;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  color: #fff;
 }
 
 .budget__title {
-  font-size: 2vw;
-  color: rgb(192, 192, 192);
-  margin: 4rem 0;
+  font-size: 18px;
   text-align: center;
+  margin-bottom: 10px;
+  font-weight: 300;
 }
 
 .budget__value {
-  font-size: 10vw;
-  font-weight: 700;
-}
-
-.top-bottom {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 30vh;
-  width: 100%;
+  font-weight: 300;
+  font-size: 46px;
+  text-align: center;
+  margin-bottom: 25px;
+  letter-spacing: 2px;
 }
 
 .budget__income,
 .budget__expenses {
-  width: 40%;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  padding: 12px;
+  text-transform: uppercase;
+}
+
+.budget__income {
+  margin-bottom: 10px;
+  background-color: #28b9b5;
+}
+
+.budget__expenses {
+  background-color: #ff5049;
 }
 
 .budget__income--text,
+.budget__expenses--text {
+  float: left;
+  font-size: 13px;
+  color: #444;
+  margin-top: 2px;
+}
+
 .budget__income--value,
-.budget__expenses--text,
 .budget__expenses--value {
-  font-size: 2vw;
+  letter-spacing: 1px;
+  float: left;
 }
 
-.budget__expenses--text,
-.budget__income--text {
-  color: rgb(192, 192, 192);
+.budget__income--percentage,
+.budget__expenses--percentage {
+  float: left;
+  width: 34px;
+  font-size: 11px;
+  padding: 3px 0;
+  margin-left: 10px;
 }
 
-.right,
-.right *,
-.left,
-.left * {
-  display: flex;
-  margin: 0 1em;
-  align-items: center;
-}
-
-.budget__expenses--percentage,
-.budget__income--percentage {
-  border: 1px solid red;
-  border-radius: 50%;
-  width: 75px;
-  height: 75px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
-.budget__income--percentage {
-  border: 1px solid green;
+.budget__expenses--percentage {
+  background-color: rgba(255, 255, 255, 0.2);
+  text-align: center;
+  border-radius: 3px;
 }
 
 /**********************************************
@@ -116,8 +123,9 @@ header h4 {
 
 /***** FORM *****/
 .add {
-  padding: 25px 0;
-  background-color: #131313;
+  padding: 14px;
+  border-bottom: 1px solid #e7e7e7;
+  background-color: #f7f7f7;
 }
 
 .add__container {
@@ -131,7 +139,7 @@ header h4 {
   height: 44px;
   font-size: 18px;
   color: inherit;
-  background-color: rgb(0, 0, 0);
+  background-color: #fff;
   margin-right: 10px;
   font-weight: 300;
   transition: border 0.3s;
@@ -140,8 +148,8 @@ header h4 {
 .add__description,
 .add__value {
   border: 1px solid #e7e7e7;
-  background-color: rgb(0, 0, 0);
-  color: white;
+  background-color: #fff;
+  color: inherit;
   font-family: inherit;
   font-size: 14px;
   padding: 12px 15px;
@@ -186,20 +194,19 @@ header h4 {
 
 /***** LISTS *****/
 .container {
-  width: 100%;
+  width: 1000px;
   margin: 60px auto;
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
 
 .income {
-  width: 40%;
+  float: left;
+  width: 475px;
   margin-right: 50px;
 }
 
 .expenses {
-  width: 40%;
+  float: left;
+  width: 475px;
 }
 
 h2 {
@@ -209,11 +216,11 @@ h2 {
   margin-bottom: 15px;
 }
 
-.icome__title,
+.icome__title {
+  color: #28b9b5;
+}
 .expenses__title {
-  color: rgb(192, 192, 192);
-  padding-bottom: 1em;
-  border-bottom: 2px solid white;
+  color: #ff5049;
 }
 
 .item {
