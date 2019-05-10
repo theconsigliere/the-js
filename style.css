@@ -1,3 +1,4 @@
+@import url("https://fonts.googleapis.com/css?family=Allerta+Stencil");
 /**********************************************
 *** GENERAL
 **********************************************/
@@ -7,6 +8,9 @@
   padding: 0;
   box-sizing: border-box;
   font-family: "Karla", sans-serif;
+}
+
+html {
   color: white;
 }
 
@@ -51,6 +55,9 @@ header h4 {
   color: rgb(192, 192, 192);
   margin: 4rem 0;
   text-align: center;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  font-size: 18px;
 }
 
 .budget__value {
@@ -68,7 +75,7 @@ header h4 {
 
 .budget__income,
 .budget__expenses {
-  width: 40%;
+  width: 50%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -79,6 +86,9 @@ header h4 {
 .budget__expenses--text,
 .budget__expenses--value {
   font-size: 2vw;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  font-size: 18px;
 }
 
 .budget__expenses--text,
@@ -107,7 +117,7 @@ header h4 {
 }
 
 .budget__income--percentage {
-  border: 1px solid green;
+  border: 1px solid greenyellow;
 }
 
 /**********************************************
@@ -161,7 +171,7 @@ header h4 {
   font-size: 35px;
   background: none;
   border: none;
-  color: #28b9b5;
+  color: greenyellow !important;
   cursor: pointer;
   display: inline-block;
   vertical-align: middle;
@@ -177,7 +187,7 @@ header h4 {
 .add__description:focus,
 .add__value:focus {
   outline: none;
-  border: 1px solid #28b9b5;
+  border: 1px solid yellowgreen;
 }
 
 .add__btn:focus {
@@ -213,7 +223,18 @@ h2 {
 .expenses__title {
   color: rgb(192, 192, 192);
   padding-bottom: 1em;
-  border-bottom: 2px solid white;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  font-size: 18px;
+  text-align: center;
+}
+
+.icome__title {
+  border-bottom: 1px solid yellowgreen;
+}
+
+.expenses__title {
+  border-bottom: 1px solid red;
 }
 
 .item {
@@ -251,13 +272,13 @@ h2 {
 
 .income .item__value,
 .income .item__delete--btn {
-  color: #28b9b5;
+  color: yellowgreen;
 }
 
 .expenses .item__value,
 .expenses .item__percentage,
 .expenses .item__delete--btn {
-  color: #ff5049;
+  color: red;
 }
 
 .item__delete {
@@ -295,7 +316,7 @@ h2 {
 .unpaid {
   background-color: #ffdad9 !important;
   cursor: pointer;
-  color: #ff5049;
+  color: red;
 }
 
 .unpaid .item__percentage {
