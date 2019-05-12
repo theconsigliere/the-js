@@ -47,7 +47,7 @@ header h4 {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 40vh;
+  height: 500px;
 }
 
 .budget__title {
@@ -69,13 +69,13 @@ header h4 {
   display: flex;
   align-items: center;
   justify-content: center;
-  height: 30vh;
+  height: 20vh;
   width: 100%;
 }
 
 .budget__income,
 .budget__expenses {
-  width: 50%;
+  width: 30%;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -204,12 +204,12 @@ header h4 {
 }
 
 .income {
-  width: 40%;
+  width: 30%;
   margin-right: 50px;
 }
 
 .expenses {
-  width: 40%;
+  width: 30%;
 }
 
 h2 {
