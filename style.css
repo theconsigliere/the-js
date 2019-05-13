@@ -240,6 +240,8 @@ h2 {
 .item {
   padding: 13px;
   border-bottom: 1px solid #e7e7e7;
+  display: flex;
+  justify-content: space-between;
 }
 
 .item:first-child {
