@@ -15,7 +15,7 @@ html {
 }
 
 .clearfix::after {
-  content: "";
+  /* content: ""; */
   display: table;
   clear: both;
 }
@@ -203,12 +203,14 @@ header h4 {
   justify-content: center;
 }
 
-.income {
+.income,
+.income__list {
   width: 30%;
   margin-right: 50px;
 }
 
-.expenses {
+.expenses,
+.expenses__list {
   width: 30%;
 }
 
@@ -239,24 +241,12 @@ h2 {
 
 .item {
   padding: 13px;
-  border-bottom: 1px solid #e7e7e7;
+  border-bottom: 1px solid #292929;
   display: flex;
   justify-content: space-between;
 }
 
-.item:first-child {
-  border-top: 1px solid #e7e7e7;
-}
-.item:nth-child(even) {
-  background-color: #f7f7f7;
-}
-
-.item__description {
-  float: left;
-}
-
 .item__value {
-  float: left;
   transition: transform 0.3s;
 }
 
@@ -265,7 +255,7 @@ h2 {
   margin-left: 20px;
   transition: transform 0.3s;
   font-size: 11px;
-  background-color: #ffdad9;
+  background-color: red;
   padding: 3px;
   border-radius: 3px;
   width: 32px;
@@ -289,6 +279,7 @@ h2 {
 
 .item__delete--btn {
   font-size: 22px;
+  color: red;
   background: none;
   border: none;
   cursor: pointer;
@@ -326,4 +317,11 @@ h2 {
 }
 .unpaid:hover .item__description {
   font-weight: 900;
+}
+
+.bottom-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 100px;
 }
