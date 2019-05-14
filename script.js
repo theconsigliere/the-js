@@ -1,25 +1,39 @@
-// Budget Calculator
+// Budget Calculator ***************************
 //--------------------------------------------------------------------------------
 
 // BUDGET CONTROLLER
 //--------------------------------------------------------------------------------
-//IIFE function
-//creates own scope
+
 var budgetController = (function() {
-  //function constructors
+  // EXPENSE FUNCTION CONSTRUCTOR
   var Expense = function(id, description, value) {
     this.id = id;
     this.description = description;
     this.value = value;
   };
-  //function constructors
+
+  // INCOME FUNCTION CONSTRUCTOR
   var Income = function(id, description, value) {
     this.id = id;
     this.description = description;
     this.value = value;
   };
 
-  // DATA STRUCTURE
+  // CALCULATE TOTAL
+
+  var calculateTotal = function(type) {
+    var sum = 0;
+    data.allItems[type].forEach(function(cur) {
+      sum += cur.value;
+    });
+    data.totals[type] = sum;
+  };
+
+  //--------------------------------------------------------------------------------
+
+  // DATA OBJECT
+  //--------------------------------------------------------------------------------
+
   var data = {
     allItems: {
       exp: [],
@@ -28,7 +42,9 @@ var budgetController = (function() {
     totals: {
       exp: 0,
       inc: 0
-    }
+    },
+    budget: 0,
+    percentage: -1
   };
 
   // ADD ITEM FUNCTION
@@ -55,6 +71,36 @@ var budgetController = (function() {
       return newItem;
     },
 
+    // CALCULATE BUDGET
+
+    calculateBudget: function() {
+      // calculate total income and expenses
+      calculateTotal("exp");
+      calculateTotal("inc");
+
+      // Calculate the budget: income - expenses
+      data.budget = data.totals.inc - data.totals.exp;
+
+      //calculate the percentage of income that we spent
+
+      if (data.totals.inc > 0) {
+        data.percentage = Math.round((data.totals.exp / data.totals.inc) * 100);
+      } else {
+        data.percentage = -1;
+      }
+    },
+
+    // GET BUDGET METHOD
+    getBudget: function() {
+      return {
+        budget: data.budget,
+        totalInc: data.totals.inc,
+        totalExp: data.totals.exp,
+        percentage: data.percentage
+      };
+    },
+
+    // TESTING METHOD
     testing: function() {
       console.log(data);
     }
@@ -62,13 +108,12 @@ var budgetController = (function() {
 })();
 
 //--------------------------------------------------------------------------------
-// seperation of concerns, each module is a stand alone
 
 // UI CONTROLLER
 //--------------------------------------------------------------------------------
 var UIController = (function() {
   //some code
-
+  //holds all css values in an object for quick reference
   var DOMStrings = {
     // put all of selectors in a object so we can access them easily
     inputType: ".add__type",
@@ -85,7 +130,8 @@ var UIController = (function() {
         // returns all inputs as an object
         type: document.querySelector(DOMStrings.inputType).value, // will be either inc or exp
         description: document.querySelector(DOMStrings.inputDesc).value,
-        value: document.querySelector(DOMStrings.inputValue).value
+        //parse float turns string into a decimal number so we can use number to calc
+        value: parseFloat(document.querySelector(DOMStrings.inputValue).value)
       };
     },
 
@@ -140,7 +186,7 @@ var UIController = (function() {
 
 // GLOBAL APP CONTROLLER
 //--------------------------------------------------------------------------------
-//budget & UI controller passed in and named different so if we chose to pass in different values the mdoule will still work
+
 var controller = (function(budgetCtrl, UICtrl) {
   var setupEventListeners = function() {
     //recieve dom strings
@@ -150,32 +196,47 @@ var controller = (function(budgetCtrl, UICtrl) {
 
     document.addEventListener("keypress", function(event) {
       // not accessing a particular elemnt but a key press needs access to whole webpage
-      //console.log(event.keyCode);
+
       if (event.keyCode === 13 || event.which === 13) {
         ctrlAddItem();
       }
     });
   };
 
-  //called when event listener is pressed of clicked
+  //UPDATE BUDGET
+
+  var updateBudget = function() {
+    // 1. Calculate the budget
+    budgetCtrl.calculateBudget();
+
+    // 2. Return the budget
+    var budget = budgetCtrl.getBudget();
+
+    console.log(budget);
+  };
+
+  //ADD ITEM
+
   var ctrlAddItem = function() {
     var input, newItem;
     //
 
     //1. Get the field input data
     input = UICtrl.getInput();
+    // the input desc has no value and the number is nan and input is greater than zero
+    if (input.description !== "" && !isNaN(input.value) && input.value > 0) {
+      //2. Add the item to the budget Controller
+      newItem = budgetCtrl.addItem(input.type, input.description, input.value);
+      //3. Add the item to the UI
+      UICtrl.addlistItem(newItem, input.type);
 
-    //2. Add the item to the budget Controller
-    newItem = budgetCtrl.addItem(input.type, input.description, input.value);
-    //3. Add the item to the UI
-    UICtrl.addlistItem(newItem, input.type);
+      //4. Clear the fields
 
-    //4. Clear the fields
+      UICtrl.clearFields();
 
-    UICtrl.clearFields();
-    //4. Calculate the budget
-
-    //5. Display the budget on the UI
+      // 5, calculate & update budget
+      updateBudget();
+    }
   };
 
   return {

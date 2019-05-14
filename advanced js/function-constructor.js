@@ -9,12 +9,14 @@ var max = {
   job: "designer"
 };
 
-//object created then function constructor is called
+// FUNCTION CONSTRUCTOR
+//--------------------------------------------------------------------------------------
 var person = function(name, yearOfBirth, job) {
   this.name = name;
   this.yearOfBirth = yearOfBirth;
   this.job = job;
 };
+
 //rather than having the method within the object we can create a prototype
 //using inheritance
 person.prototype.calculateAge = function() {
