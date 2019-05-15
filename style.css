@@ -63,6 +63,7 @@ header h4 {
 .budget__value {
   font-size: 10vw;
   font-weight: 700;
+  text-align: center;
 }
 
 .top-bottom {
