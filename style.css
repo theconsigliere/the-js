@@ -196,7 +196,7 @@ header h4 {
 }
 
 /***** LISTS *****/
-.container {
+.old-container {
   width: 100%;
   margin: 60px auto;
   display: flex;
