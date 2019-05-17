@@ -177,6 +177,8 @@ var UIController = (function() {
       document.querySelector(element).insertAdjacentHTML("beforeend", newHtml);
     },
 
+    // DELETE LIST ITEM METHOD
+
     //CLEAR FIELDS METHOD
     clearFields: function() {
       var fields, fieldsArr;
