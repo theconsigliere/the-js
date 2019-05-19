@@ -326,3 +326,10 @@ h2 {
   justify-content: center;
   padding-bottom: 100px;
 }
+
+.red {
+  color: red !important;
+}
+.red-focus:focus {
+  border: 1px solid red !important;
+}

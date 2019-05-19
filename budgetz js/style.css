@@ -1,5 +1,4 @@
-@import url("https://fonts.googleapis.com/css?family=Roboto");
-
+@import url("https://fonts.googleapis.com/css?family=Allerta+Stencil");
 /**********************************************
 *** GENERAL
 **********************************************/
@@ -9,112 +8,117 @@
   padding: 0;
   box-sizing: border-box;
   font-family: "Karla", sans-serif;
+}
+
+html {
   color: white;
 }
 
 .clearfix::after {
-  content: "";
+  /* content: ""; */
   display: table;
   clear: both;
 }
 
 body {
-  color: #000;
+  background: #000;
   font-size: 16px;
   position: relative;
   height: 100vh;
+  width: 100%;
   font-weight: 400;
 }
 
-.right {
-  float: right;
-}
-.red {
-  color: #ff5049 !important;
-}
-.red-focus:focus {
-  border: 1px solid #ff5049 !important;
+/**********************************************/
+
+header {
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 10vh;
 }
 
-/**********************************************
-*** TOP PART
-**********************************************/
+header h4 {
+  font-size: 2vw;
+}
 
 .top {
-  height: 40vh;
-  background-image: linear-gradient(rgba(0, 0, 0, 0.35), rgba(0, 0, 0, 0.35)),
-    url(back.png);
-  background-size: cover;
-  background-position: center;
-  position: relative;
-}
-
-.budget {
-  position: absolute;
-  width: 350px;
-  top: 50%;
-  left: 50%;
-  transform: translate(-50%, -50%);
-  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 500px;
 }
 
 .budget__title {
-  font-size: 18px;
+  font-size: 2vw;
+  color: rgb(192, 192, 192);
+  margin: 4rem 0;
   text-align: center;
-  margin-bottom: 10px;
-  font-weight: 300;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  font-size: 18px;
 }
 
 .budget__value {
-  font-weight: 300;
-  font-size: 46px;
+  font-size: 10vw;
+  font-weight: 700;
   text-align: center;
-  margin-bottom: 25px;
-  letter-spacing: 2px;
+}
+
+.top-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 20vh;
+  width: 100%;
 }
 
 .budget__income,
 .budget__expenses {
-  padding: 12px;
-  text-transform: uppercase;
-}
-
-.budget__income {
-  margin-bottom: 10px;
-  background-color: #28b9b5;
-}
-
-.budget__expenses {
-  background-color: #ff5049;
+  width: 30%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
 .budget__income--text,
-.budget__expenses--text {
-  float: left;
-  font-size: 13px;
-  color: #444;
-  margin-top: 2px;
-}
-
 .budget__income--value,
+.budget__expenses--text,
 .budget__expenses--value {
-  letter-spacing: 1px;
-  float: left;
+  font-size: 2vw;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  font-size: 18px;
 }
 
-.budget__income--percentage,
-.budget__expenses--percentage {
-  float: left;
-  width: 34px;
-  font-size: 11px;
-  padding: 3px 0;
-  margin-left: 10px;
+.budget__expenses--text,
+.budget__income--text {
+  color: rgb(192, 192, 192);
 }
 
-.budget__expenses--percentage {
-  background-color: rgba(255, 255, 255, 0.2);
-  text-align: center;
-  border-radius: 3px;
+.right,
+.right *,
+.left,
+.left * {
+  display: flex;
+  margin: 0 1em;
+  align-items: center;
+}
+
+.budget__expenses--percentage,
+.budget__income--percentage {
+  border: 1px solid red;
+  border-radius: 50%;
+  width: 75px;
+  height: 75px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.budget__income--percentage {
+  border: 1px solid greenyellow;
 }
 
 /**********************************************
@@ -123,9 +127,8 @@ body {
 
 /***** FORM *****/
 .add {
-  padding: 14px;
-  border-bottom: 1px solid #e7e7e7;
-  background-color: #f7f7f7;
+  padding: 25px 0;
+  background-color: #131313;
 }
 
 .add__container {
@@ -139,7 +142,7 @@ body {
   height: 44px;
   font-size: 18px;
   color: inherit;
-  background-color: #fff;
+  background-color: rgb(0, 0, 0);
   margin-right: 10px;
   font-weight: 300;
   transition: border 0.3s;
@@ -148,8 +151,8 @@ body {
 .add__description,
 .add__value {
   border: 1px solid #e7e7e7;
-  background-color: #fff;
-  color: inherit;
+  background-color: rgb(0, 0, 0);
+  color: white;
   font-family: inherit;
   font-size: 14px;
   padding: 12px 15px;
@@ -169,7 +172,7 @@ body {
   font-size: 35px;
   background: none;
   border: none;
-  color: #28b9b5;
+  color: greenyellow !important;
   cursor: pointer;
   display: inline-block;
   vertical-align: middle;
@@ -185,7 +188,7 @@ body {
 .add__description:focus,
 .add__value:focus {
   outline: none;
-  border: 1px solid #28b9b5;
+  border: 1px solid yellowgreen;
 }
 
 .add__btn:focus {
@@ -193,20 +196,23 @@ body {
 }
 
 /***** LISTS *****/
-.container {
-  width: 1000px;
+.old-container {
+  width: 100%;
   margin: 60px auto;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.income {
-  float: left;
-  width: 475px;
+.income,
+.income__list {
+  width: 30%;
   margin-right: 50px;
 }
 
-.expenses {
-  float: left;
-  width: 475px;
+.expenses,
+.expenses__list {
+  width: 30%;
 }
 
 h2 {
@@ -216,31 +222,32 @@ h2 {
   margin-bottom: 15px;
 }
 
-.icome__title {
-  color: #28b9b5;
-}
+.icome__title,
 .expenses__title {
-  color: #ff5049;
+  color: rgb(192, 192, 192);
+  padding-bottom: 1em;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  font-size: 18px;
+  text-align: center;
+}
+
+.icome__title {
+  border-bottom: 1px solid yellowgreen;
+}
+
+.expenses__title {
+  border-bottom: 1px solid red;
 }
 
 .item {
   padding: 13px;
-  border-bottom: 1px solid #e7e7e7;
-}
-
-.item:first-child {
-  border-top: 1px solid #e7e7e7;
-}
-.item:nth-child(even) {
-  background-color: #f7f7f7;
-}
-
-.item__description {
-  float: left;
+  border-bottom: 1px solid #292929;
+  display: flex;
+  justify-content: space-between;
 }
 
 .item__value {
-  float: left;
   transition: transform 0.3s;
 }
 
@@ -249,22 +256,22 @@ h2 {
   margin-left: 20px;
   transition: transform 0.3s;
   font-size: 11px;
-  background-color: #ffdad9;
+  background-color: red;
   padding: 3px;
   border-radius: 3px;
-  width: 33px;
+  width: 32px;
   text-align: center;
 }
 
 .income .item__value,
 .income .item__delete--btn {
-  color: #28b9b5;
+  color: yellowgreen;
 }
 
 .expenses .item__value,
 .expenses .item__percentage,
 .expenses .item__delete--btn {
-  color: #ff5049;
+  color: red;
 }
 
 .item__delete {
@@ -273,6 +280,7 @@ h2 {
 
 .item__delete--btn {
   font-size: 22px;
+  color: red;
   background: none;
   border: none;
   cursor: pointer;
@@ -302,7 +310,7 @@ h2 {
 .unpaid {
   background-color: #ffdad9 !important;
   cursor: pointer;
-  color: #ff5049;
+  color: red;
 }
 
 .unpaid .item__percentage {
@@ -310,4 +318,18 @@ h2 {
 }
 .unpaid:hover .item__description {
   font-weight: 900;
+}
+
+.bottom-bottom {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-bottom: 100px;
+}
+
+.red {
+  color: red !important;
+}
+.red-focus:focus {
+  border: 1px solid red !important;
 }
