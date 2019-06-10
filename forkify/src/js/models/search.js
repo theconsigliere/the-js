@@ -1,6 +1,10 @@
+//------------------------------------------------------
+// gets result of searchView  'query' then does an api call to find results,
+
 //import npm package from node modules
 import axios from "axios";
 
+//exports to 'controller 'index.js'
 export default class Search {
   constructor(query) {
     this.query = query;

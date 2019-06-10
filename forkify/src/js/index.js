@@ -2,6 +2,10 @@
 
 //import npm package from node modules
 import Search from "./models/search";
+//everything from the searchView module will be stored as searchView object
+import * as searchView from "./views/searchView";
+// import from base query selector object
+import { elements } from "./views/base";
 
 // Global state of the app
 // * - Search Object
@@ -13,7 +17,8 @@ const state = {};
 
 const controlSearch = async () => {
   // 1) get query from the view
-  const query = "pizza"; // todo
+  const query = searchView.getInput();
+  console.log(query);
 
   //2) create new search object
 
@@ -33,7 +38,7 @@ const controlSearch = async () => {
 };
 
 // on submision of search form
-document.querySelector(".search").addEventListener("submit", cur => {
+elements.searchForm.addEventListener("submit", cur => {
   //using preventdefault to stop the submission of the form taking you to a new page
   cur.preventDefault();
   controlSearch();
