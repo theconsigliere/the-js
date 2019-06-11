@@ -18,7 +18,6 @@ const state = {};
 const controlSearch = async () => {
   // 1) get query from the view
   const query = searchView.getInput();
-  console.log(query);
 
   //2) create new search object
 
@@ -28,12 +27,15 @@ const controlSearch = async () => {
     state.search = new Search(query);
 
     // 3) prepare UI for results
+    searchView.clearInput();
+    searchView.clearResults();
 
     // 4) search for recipes
     await state.search.getResults();
 
     // 5) render results on the UI
-    console.log(state.search.result);
+    // puts api result 'search.js object constructor' into renderResults method 'searchView.js'
+    searchView.renderResults(state.search.result);
   }
 };
 
