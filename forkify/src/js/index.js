@@ -5,7 +5,7 @@ import Search from "./models/search";
 //everything from the searchView module will be stored as searchView object
 import * as searchView from "./views/searchView";
 // import from base query selector object
-import { elements } from "./views/base";
+import { elements, renderLoader, clearLoader } from "./views/base";
 
 // Global state of the app
 // * - Search Object
@@ -29,11 +29,13 @@ const controlSearch = async () => {
     // 3) prepare UI for results
     searchView.clearInput();
     searchView.clearResults();
+    renderLoader(elements.searchResult);
 
     // 4) search for recipes
     await state.search.getResults();
 
     // 5) render results on the UI
+    clearLoader();
     // puts api result 'search.js object constructor' into renderResults method 'searchView.js'
     searchView.renderResults(state.search.result);
   }
