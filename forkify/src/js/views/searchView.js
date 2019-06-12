@@ -6,6 +6,9 @@ import { elements } from "./base";
 //returns input value of search field
 export const getInput = () => elements.searchInput.value;
 
+// CLEARS FORM INPUT
+//-----------------------------------------------------------------------------------
+
 export const clearInput = () => {
   //clears search form
   elements.searchInput.value = " ";
@@ -14,9 +17,14 @@ export const clearInput = () => {
 export const clearResults = () => {
   // clears  results on left hand side
   elements.searchResultList.innerHTML = " ";
+  // clear buttons
+  elements.searchResultPages.innerHTML = " ";
 
   console.log(elements.searchResultList.innerHTML);
 };
+
+// RECIPE ITEM TITLE LIMIT
+//-----------------------------------------------------------------------------------
 
 /*
  'Pasta with tomato and Spinach'
@@ -47,6 +55,9 @@ const limitRecipeTitle = (title, limit = 17) => {
   return title;
 };
 
+// RECIPE ITEM MARKUP
+//-----------------------------------------------------------------------------------
+
 //private function
 const renderRecipe = recipe => {
   const markup = `
@@ -67,8 +78,60 @@ const renderRecipe = recipe => {
   elements.searchResultList.insertAdjacentHTML("afterbegin", markup);
 };
 
+// BUTTON MARKUP
+//-----------------------------------------------------------------------------------
+
+// type: 'prev' or 'next'
+const createButton = (
+  page,
+  type
+) => ` <button class="btn-inline results__btn--${type}" data-goto=${
+  type === "prev" ? page - 1 : page + 1
+}>
+<svg class="search__icon">
+    <use href="img/icons.svg#icon-triangle-${
+      type === "prev" ? "left" : "right"
+    }"></use>
+</svg>
+<span>Page ${type === "prev" ? page - 1 : page + 1}</span>
+</button>`;
+
+// SHOW BUTTONS FOR PAGINATION
+//-----------------------------------------------------------------------------------
+const renderButtons = (page, numberResults, resultsPerPage) => {
+  const pages = Math.ceil(numberResults / resultsPerPage);
+
+  let button;
+  if (page === 1 && pages > 1) {
+    // only button to go to next page
+    button = createButton(page, "next");
+  } else if (page < pages) {
+    // Both buttons
+    button = `
+    ${createButton(page, "prev")} 
+    ${createButton(page, "next")} 
+    `;
+  } else if (page === pages && pages > 1) {
+    // only button to go to prev page
+    button = createButton(page, "prev");
+  }
+
+  // add 'markup' to .results_pages query selector
+  elements.searchResultPages.insertAdjacentHTML("afterbegin", button);
+};
+
+// SHOW ONLY 10 RESULTS FOR EACH PAGE
+//-----------------------------------------------------------------------------------
 // we return an array of 30 recipes now we loop through these to print ot user interface
-export const renderResults = recipes => {
+export const renderResults = (recipes, page = 1, resultsPerPage = 10) => {
+  // * render results of current page
+
+  // display only resultsper page = 10
+  const start = (page - 1) * resultsPerPage;
+  const end = page * resultsPerPage;
   // calls renderRecipe for each of the results
-  recipes.forEach(renderRecipe);
+  recipes.slice(start, end).forEach(renderRecipe);
+
+  // * render pagination buttons
+  renderButtons(page, recipes.length, resultsPerPage);
 };
