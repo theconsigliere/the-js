@@ -2,6 +2,8 @@
 
 //import npm package from node modules
 import Search from "./models/search";
+import Recipe from "./models/recipe";
+
 //everything from the searchView module will be stored as searchView object
 import * as searchView from "./views/searchView";
 // import from base query selector object
@@ -19,6 +21,9 @@ import {
 // * - Liked Recipes
 
 const state = {};
+
+// SEARCH CONTROLLER
+//-------------------------------------------------------------------------------------------------
 
 const controlSearch = async () => {
   // 1) get query from the view
@@ -67,3 +72,12 @@ elements.searchResultPages.addEventListener("click", current => {
     console.log(gotToPage);
   }
 });
+
+// RECIPE CONTROLLER
+//-------------------------------------------------------------------------------------------------
+
+const r = new Recipe(46956);
+
+r.getRecipe();
+
+console.log(r);

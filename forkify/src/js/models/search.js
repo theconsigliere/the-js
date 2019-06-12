@@ -3,6 +3,7 @@
 
 //import npm package from node modules
 import axios from "axios";
+import { key } from "../config";
 
 //exports to 'controller 'index.js'
 export default class Search {
@@ -12,8 +13,6 @@ export default class Search {
 
   // Use async as a method of construtor
   async getResults() {
-    const key = "30f641ec643488f12ec63459ad7ee18c";
-
     try {
       //axios is like 'fetch' for all browsers but automatic returns json
       const res = await axios(
