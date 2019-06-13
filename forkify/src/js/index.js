@@ -41,13 +41,18 @@ const controlSearch = async () => {
     searchView.clearResults();
     renderLoader(elements.searchResult);
 
-    // 4) search for recipes
-    await state.search.getResults();
+    try {
+      // 4) search for recipes
+      await state.search.getResults();
 
-    // 5) render results on the UI
-    clearLoader();
-    // puts api result 'search.js object constructor' into renderResults method 'searchView.js'
-    searchView.renderResults(state.search.result);
+      // 5) render results on the UI
+      clearLoader();
+      // puts api result 'search.js object constructor' into renderResults method 'searchView.js'
+      searchView.renderResults(state.search.result);
+    } catch (error) {
+      alert("Something went wrong with the search...");
+      clearLoader();
+    }
   }
 };
 
@@ -76,8 +81,39 @@ elements.searchResultPages.addEventListener("click", current => {
 // RECIPE CONTROLLER
 //-------------------------------------------------------------------------------------------------
 
-const r = new Recipe(46956);
+// GET ANCHOR HASH
+const controlRecipe = async () => {
+  // get ID from URL & remove #
+  const id = window.location.hash.replace("#", "");
+  console.log(id);
 
-r.getRecipe();
+  if (id) {
+    // prepare UI for changes
 
-console.log(r);
+    // create new recipe object
+    state.recipe = new Recipe(id);
+
+    try {
+      // get recipe data
+      await state.recipe.getRecipe();
+
+      // calculate servings and time
+      state.recipe.calcTime();
+      state.recipe.calcServings();
+
+      // render recipe
+      console.log(state.recipe);
+    } catch (error) {
+      alert("Error processing recipe!");
+    }
+  }
+};
+
+// in url hash change run controlRecipe
+// window.addEventListener("hashchange", controlRecipe);
+// When we load page we can access the recipe
+// window.addEventListener('load', controlRecipe)
+
+["hashchange", "load"].forEach(event =>
+  window.addEventListener(event, controlRecipe)
+);
