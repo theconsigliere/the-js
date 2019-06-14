@@ -6,6 +6,8 @@ import Recipe from "./models/recipe";
 
 //everything from the searchView module will be stored as searchView object
 import * as searchView from "./views/searchView";
+
+import * as recipeView from "./views/recipeView";
 // import from base query selector object
 import {
   elements,
@@ -57,6 +59,7 @@ const controlSearch = async () => {
 };
 
 // on submision of search form
+//-----------------------------------------------------------------------------------
 elements.searchForm.addEventListener("submit", cur => {
   //using preventdefault to stop the submission of the form taking you to a new page
   cur.preventDefault();
@@ -89,22 +92,27 @@ const controlRecipe = async () => {
 
   if (id) {
     // prepare UI for changes
+    recipeView.clearRecipe();
+    renderLoader(elements.recipe); // always pass in where the loader should display itself
 
     // create new recipe object
     state.recipe = new Recipe(id);
 
     try {
-      // get recipe data
+      // get recipe data & parse ingrediients
       await state.recipe.getRecipe();
+      // console.log(state.recipe.ingredients);
+      state.recipe.parseIngredients();
 
       // calculate servings and time
       state.recipe.calcTime();
       state.recipe.calcServings();
 
       // render recipe
-      console.log(state.recipe);
+      clearLoader();
+      recipeView.renderRecipe(state.recipe);
     } catch (error) {
-      alert("Error processing recipe!");
+      alert(error);
     }
   }
 };
