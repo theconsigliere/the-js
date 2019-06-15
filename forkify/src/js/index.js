@@ -3,6 +3,7 @@
 //import npm package from node modules
 import Search from "./models/search";
 import Recipe from "./models/recipe";
+import List from "./models/List";
 
 //everything from the searchView module will be stored as searchView object
 import * as searchView from "./views/searchView";
@@ -88,12 +89,17 @@ elements.searchResultPages.addEventListener("click", current => {
 const controlRecipe = async () => {
   // get ID from URL & remove #
   const id = window.location.hash.replace("#", "");
-  console.log(id);
+  // console.log(id);
 
   if (id) {
     // prepare UI for changes
     recipeView.clearRecipe();
     renderLoader(elements.recipe); // always pass in where the loader should display itself
+
+    //Highlight selected search item
+    if (state.search) {
+      searchView.highlightSelected(id);
+    }
 
     // create new recipe object
     state.recipe = new Recipe(id);
@@ -125,3 +131,27 @@ const controlRecipe = async () => {
 ["hashchange", "load"].forEach(event =>
   window.addEventListener(event, controlRecipe)
 );
+
+// hANDLING RECIPE BUTTON CLICKS
+//-----------------------------------------------------------------------------------------------------
+
+elements.recipe.addEventListener("click", e => {
+  if (e.target.matches(".btn-decrease, .btn-decrease *")) {
+    //decrease button is clicked
+    if (state.recipe.servings > 1) {
+      state.recipe.updateServings("dec");
+      recipeView.updateServingsIngredients(state.recipe);
+    }
+  } else if (e.target.matches(".btn-increase, .btn-increase *")) {
+    // Increase button is clicked
+    state.recipe.updateServings("inc");
+    recipeView.updateServingsIngredients(state.recipe);
+  }
+
+  // console.log(state.recipe);
+});
+
+// LIST CONTROLLER
+//-------------------------------------------------------------------------------------------------
+
+window.l = new List();

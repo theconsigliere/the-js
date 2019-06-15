@@ -26,6 +26,20 @@ export const clearResults = () => {
 // RECIPE ITEM TITLE LIMIT
 //-----------------------------------------------------------------------------------
 
+export const highlightSelected = id => {
+  const resultsArr = Array.from(document.querySelectorAll(".results__link"));
+  resultsArr.forEach(el => {
+    el.classList.remove("results__link--active");
+  });
+
+  document
+    .querySelector(`a[href='#${id}']`)
+    .classList.add("results__link--active");
+};
+
+// RECIPE ITEM TITLE LIMIT
+//-----------------------------------------------------------------------------------
+
 /*
  'Pasta with tomato and Spinach'
 
