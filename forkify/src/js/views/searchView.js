@@ -33,7 +33,7 @@ export const highlightSelected = id => {
   });
 
   document
-    .querySelector(`a[href='#${id}']`)
+    .querySelector(`.results__link[href='#${id}']`)
     .classList.add("results__link--active");
 };
 
@@ -50,7 +50,7 @@ export const highlightSelected = id => {
  acc: 18 / accumulator + currentWord.length = 24 / newTitle = ['Pasta', with, 'tomato']
 */
 
-const limitRecipeTitle = (title, limit = 17) => {
+export const limitRecipeTitle = (title, limit = 17) => {
   const newTitle = [];
   // if title.length is longer than 17 we shorten it
   if (title.length > limit) {
@@ -137,15 +137,13 @@ const renderButtons = (page, numberResults, resultsPerPage) => {
 // SHOW ONLY 10 RESULTS FOR EACH PAGE
 //-----------------------------------------------------------------------------------
 // we return an array of 30 recipes now we loop through these to print ot user interface
-export const renderResults = (recipes, page = 1, resultsPerPage = 10) => {
-  // * render results of current page
+export const renderResults = (recipes, page = 1, resPerPage = 10) => {
+  // render results of currente page
+  const start = (page - 1) * resPerPage;
+  const end = page * resPerPage;
 
-  // display only resultsper page = 10
-  const start = (page - 1) * resultsPerPage;
-  const end = page * resultsPerPage;
-  // calls renderRecipe for each of the results
   recipes.slice(start, end).forEach(renderRecipe);
 
-  // * render pagination buttons
-  renderButtons(page, recipes.length, resultsPerPage);
+  // render pagination buttons
+  renderButtons(page, recipes.length, resPerPage);
 };

@@ -32,31 +32,27 @@ window.state = state;
 //-------------------------------------------------------------------------------------------------
 
 const controlSearch = async () => {
-  // 1) get query from the view
+  // 1) Get query from view
   const query = searchView.getInput();
 
-  //2) create new search object
-
   if (query) {
-    //2) create new search object and add to state
-    //call search.js object constructor
+    // 2) New search object and add to state
     state.search = new Search(query);
 
-    // 3) prepare UI for results
+    // 3) Prepare UI for results
     searchView.clearInput();
     searchView.clearResults();
     renderLoader(elements.searchResult);
 
     try {
-      // 4) search for recipes
+      // 4) Search for recipes
       await state.search.getResults();
 
-      // 5) render results on the UI
+      // 5) Render results on UI
       clearLoader();
-      // puts api result 'search.js object constructor' into renderResults method 'searchView.js'
       searchView.renderResults(state.search.result);
-    } catch (error) {
-      console.log(error);
+    } catch (err) {
+      console.log(err);
       clearLoader();
     }
   }
@@ -171,43 +167,57 @@ const controlList = () => {
 // LIKE CONTROLLER
 //---------------------------------------------------------------------------------------------------
 
-//! TESTING
-
-state.likes = new Likes();
+// state.likes = new Likes();
 
 const controlLike = () => {
   if (!state.likes) state.likes = new Likes();
   const currentID = state.recipe.id;
 
-  //User has NOT yet liked current recipe
+  // User has NOT yet liked current recipe
   if (!state.likes.isLiked(currentID)) {
-    //Add like to the state
-    const newlike = state.likes.addLike(
+    // Add like to the state
+    const newLike = state.likes.addLike(
       currentID,
       state.recipe.title,
       state.recipe.author,
       state.recipe.img
     );
-    //Toggle the like button
+    // Toggle the like button
     likesView.toggleLikeBtn(true);
 
-    // Add like to UI List
-    console.log(state.likes);
+    // Add like to UI list
+    likesView.renderLike(newLike);
 
     // User HAS liked current recipe
   } else {
-    // remove like from the state
+    // Remove like from the state
     state.likes.deleteLike(currentID);
 
-    //Toggle the like button
+    // Toggle the like button
     likesView.toggleLikeBtn(false);
 
-    //Remove like from the UI list
-    console.log(state.likes);
+    // Remove like from UI list
+    likesView.deleteLike(currentID);
   }
-
   likesView.toggleLikeMenu(state.likes.getNumLikes());
 };
+
+// RESTORE LIKES THROUGH LOCAL STORAGE
+//-----------------------------------------------------------------------------------------------------
+
+window.addEventListener("load", () => {
+  state.likes = new Likes();
+  // Restore likes after page load
+  state.likes.readStorage();
+
+  //toggle like menu button
+  likesView.toggleLikeMenu(state.likes.getNumLikes());
+
+  //render existing likes
+  state.likes.likes.forEach(like => {
+    likesView.renderLike(like);
+  });
+});
 
 // HANDLING RECIPE BUTTON CLICKS
 //-----------------------------------------------------------------------------------------------------
