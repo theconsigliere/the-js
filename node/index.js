@@ -21,12 +21,27 @@ const server = http.createServer((request, response) => {
   const pathName = url.parse(request.url, true).pathname;
   const id = url.parse(request.url, true).query.id;
 
-  if (pathName === "/products" || pathName === "/") {
-    //let browser know what kind of data we are sending in
-    response.writeHead(200, { "Content-type": "text/html" });
-    response.end("This is the product page");
-    //
-  } else if (pathName === "/laptop" && id < laptopData.length) {
+  // PRODUCTS OVERVIEW
+  if (pathName === '/products' || pathName === '/') {
+    response.writeHead(200, { 'Content-type': 'text/html' });
+
+    fs.readFile(`${__dirname}/templates/template-overview.html`, 'utf-8', (err, data) => {
+      let overviewOutput = data;
+
+      fs.readFile(`${__dirname}/templates/template-card.html`, 'utf-8', (err, data) => {
+
+        const cardsOutput = laptopData.map(el => replaceTemplate(data, el)).join('');
+        overviewOutput = overviewOutput.replace('{%CARDS%}', cardsOutput);
+
+        response.end(overviewOutput);
+      });
+    });
+
+
+  }
+
+  //LAPTOP DETAIL
+  else if (pathName === "/laptop" && id < laptopData.length) {
     response.writeHead(200, { "Content-type": "text/html" });
 
     //async function
@@ -35,18 +50,22 @@ const server = http.createServer((request, response) => {
       "utf-8",
       (error, data) => {
         const laptop = laptopData[id];
-        let output = data.replace("{%PRODUCTNAME%}", laptop.productName);
-        let output = output.replace("{%IMAGE%}", laptop.image);
-        let output = output.replace("{%PRICE%}", laptop.price);
-        let output = output.replace("{%SCREEN%}", laptop.screen);
-        let output = output.replace("{%CPU%}", laptop.cpu);
-        let output = output.replace("{%STORAGE%}", laptop.storage);
-        let output = output.replace("{%RAM%}", laptop.ram);
-        let output = output.replace("{%DESCRIPTION%}", laptop.description);
+        const output = replaceTemplate(data, laptop);
+        response.end(output);
       }
-    );
-    //
-  } else {
+    )
+
+    //IMAGES
+  } else if ((/\.(jpg|jpeg|png|gif)$/i).test(pathName)) {
+    fs.readFile(`${__dirname}/data/img${pathName}`, (error, data) => {
+      response.writeHead(200, { "Content-type": "image/jpg" });
+      response.end(data)
+    })
+
+  }
+
+  //URL NOT FOUND
+  else {
     response.writeHead(200, { "Content-type": "text/html" });
     response.end("Url was not found");
   }
@@ -62,3 +81,19 @@ const server = http.createServer((request, response) => {
 server.listen(1337, "127.0.0.1", () => {
   console.log("Listening for requests");
 });
+
+// REPLACE TEMPLATES
+//-------------------------------------------------------------------------------------------
+
+function replaceTemplate(originalHtml, laptop) {
+  let output = originalHtml.replace(/{%PRODUCTNAME%}/g, laptop.productName);
+  output = output.replace(/{%IMAGE%}/g, laptop.image);
+  output = output.replace(/{%PRICE%}/g, laptop.price);
+  output = output.replace(/{%SCREEN%}/g, laptop.screen);
+  output = output.replace(/{%CPU%}/g, laptop.cpu);
+  output = output.replace(/{%STORAGE%}/g, laptop.storage);
+  output = output.replace(/{%RAM%}/g, laptop.ram);
+  output = output.replace(/{%DESCRIPTION%}/g, laptop.description);
+  output = output.replace(/{%ID%}/g, laptop.id);
+  return output;
+}
